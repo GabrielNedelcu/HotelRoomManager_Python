@@ -1,5 +1,116 @@
-{% extends "base.html" %}
-{% block title %}Make a Reservation{% endblock %}
+{% extends "base.html" %} 
+
+{% block title %} 
+    Make a Reservation 
+{% endblock %}
+
 {% block content %}
-    <h1> Make a reservation</h1>
+
+<h1 align="center">Make a new reservation</h1>
+
+<form class="row g-3">
+    <h1> </h1>
+  <!-- Room Number Combo -->
+  <div class="row mb-3">
+    <label for="inputRoomNumber" class="col-sm-2 col-form-label">Room Number</label>
+    <div class="col-sm-10">
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Please select the room's number</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Client Combo -->
+  <div class="row mb-3">
+    <label for="inputClient" class="col-sm-2 col-form-label">Client</label>
+    <div class="col-sm-10">
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Please select the Client</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Start Date-->
+  <div class="row mb-3">
+    <label for="inputDoB" class="col-sm-2 col-form-label">Start Date</label>
+    <div class="col-sm-10">
+        <input
+        type="text"
+        class="form-control"
+        id="inputStartDate"
+        placeholder="12/02/2021"
+      />
+    </div>
+  </div>
+
+  <!-- End Date-->
+  <div class="row mb-3">
+    <label for="inputDoB" class="col-sm-2 col-form-label">End Date</label>
+    <div class="col-sm-10">
+        <input
+        type="text"
+        class="form-control"
+        id="inputEndDate"
+        placeholder="12/02/2021"
+      />
+    </div>
+  </div>
+
+  <!-- Additional Options Checboxes -->
+  <div class="col-12">
+    <fieldset class="row mb-3">
+      <legend class="col-form-label col-sm-2 pt-0">Additional Options</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="parkingCheck" />
+          <label class="form-check-label" for="parkingCheck">
+            Parking Spot
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="breakfastCheck" />
+          <label class="form-check-label" for="breakfastCheck">
+            Breakfast Included
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="lunchCheck" />
+          <label class="form-check-label" for="lunchCheck">
+            Lunch Included
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <!-- Add the new Client Button -->
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary mx-auto d-block">
+      Add the new reservation
+    </button>
+  </div>
+</form>
+
+<script>
+    $("#inputStartDate").datepicker({
+      uiLibrary: "bootstrap4",
+    });
+  </script>
+
+<script>
+    $("#inputEndDate").datepicker({
+      uiLibrary: "bootstrap4",
+    });
+  </script>
+
 {% endblock %}

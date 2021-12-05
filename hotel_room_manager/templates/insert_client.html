@@ -1,78 +1,108 @@
-{% extends "base.html" %}
-{% block title %}Add a Client{% endblock %}
+{% extends "base.html" %} 
 
-{% block additional_dependecies %}
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
-{% endblock %}
+{% block title %} 
+    Add a Client 
+{% endblock %} 
 
 {% block content %}
-    <h1 align = "center"> Add a client</h1>
 
-    <form class="row g-3">
-        <div class="col-md-6">
+<h1 align="center">Add a client</h1>
 
-        <!-- Client Name -->
-          <label for="inputName" class="form-label">Name</label>
-          <input type="text" class="form-control" id="inputName" placeholder="Popescu">
-        </div>
+<form class="row g-3">
+  <!-- Client Name -->
+  <div class="col-md-6">
+    <label for="inputName" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputName"
+      placeholder="Popescu"
+    />
+  </div>
 
-        <!-- Client Surname -->
-        <div class="col-md-6">
-          <label for="inputSurname" class="form-label">Surname</label>
-          <input type="text" class="form-control" id="inputSurname" placeholder="Ion">
-        </div>
+  <!-- Client Surname -->
+  <div class="col-md-6">
+    <label for="inputSurname" class="form-label">Surname</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputSurname"
+      placeholder="Ion"
+    />
+  </div>
 
-        <!-- Client Adress -->
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Address</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
+  <!-- Client Adress -->
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputAddress"
+      placeholder="1234 Main St"
+    />
+  </div>
 
-        <!-- Client Date Of Birth-->
-        <div class="col-12">
-            <label for="inputDoB" class="form-label">Date of Birth</label>
-            <input type="text" class="form-control" id="inputDoB" placeholder="12/02/2021">
-        </div>
+  <!-- Client Date Of Birth-->
+  <div class="col-12">
+    <label for="inputDoB" class="form-label">Date of Birth</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputDoB"
+      placeholder="12/02/2021"
+    />
+  </div>
 
-        <!-- Client Email Adress-->
-        <div class="col-12">
-            <label for="inputEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail" placeholder="popescu.ion@gmail.com">
-        </div>
+  <!-- Client Email Adress-->
+  <div class="col-12">
+    <label for="inputEmail" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      id="inputEmail"
+      placeholder="popescu.ion@gmail.com"
+    />
+  </div>
 
-        <!-- Client Phone Number-->
-        <div class="col-12">
-            <label for="inputPhoneNumber" class="form-label">Phone Number</label>
-            <input type="number" class="form-control" id="inputPhoneNumber" placeholder="0714151618">
-        </div>
+  <!-- Client Phone Number-->
+  <div class="col-12">
+    <label for="inputPhoneNumber" class="form-label">Phone Number</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputPhoneNumber"
+      placeholder="0714151618"
+    />
+  </div>
 
-        <!-- Client CNP-->
-        <div class="col-12">
-            <label for="inputCNP" class="form-label">Social Security Number</label>
-            <input type="number" class="form-control" id="inputCNP" placeholder="6211201018187">
-        </div>
+  <!-- Client CNP-->
+  <div class="col-12">
+    <label for="inputCNP" class="form-label">Social Security Number</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputCNP"
+      placeholder="6211201018187"
+    />
+  </div>
 
-        <div class="col-12">
-            <label for="inputPicture" class="form-label">Profile Picture</label>
-            <input class="form-control" type="file" id="inputPicture">
-          </div>
+  <div class="col-12">
+    <label for="inputPicture" class="form-label">Profile Picture</label>
+    <input class="form-control" type="file" id="inputPicture" />
+  </div>
 
-        <!-- Add the new Client Button -->
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary mx-auto d-block">Add the new client</button>
-        </div>
+  <!-- Add the new Client Button -->
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary mx-auto d-block">
+      Add the new client
+    </button>
+  </div>
 
-        <script>
-            $('#inputDoB').datepicker({
-                uiLibrary: 'bootstrap4'
-            });
-        </script>
-
-      </form>
+  <script>
+    $("#inputDoB").datepicker({
+      uiLibrary: "bootstrap4",
+    });
+  </script>
+</form>
 
 {% endblock %}
