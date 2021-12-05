@@ -2,4 +2,71 @@
 {% block title %}Insert a Room{% endblock %}
 {% block content %}
     <h1 align = "center"> Add a room</h1>
+    
+      <!-- Room Number -->
+      <div class="row mb-3">
+        <label for="roomNumber" class="col-sm-2 col-form-label">Room Number</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="roomNumber">
+        </div>
+      </div>
+
+      <!-- Room's Price -->
+      <div class="row mb-3">
+        <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="inputPrice">
+        </div>
+      </div>
+      
+      <!-- Room Floor Combo -->
+      <div class="row mb-3">
+        <label for="inputPrice" class="col-sm-2 col-form-label">Floor</label>
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Please select the room's floor</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+        </div>
+      </div>
+
+      <!-- Room Type Combo -->
+      <div class="row mb-3">
+        <label for="inputPrice" class="col-sm-2 col-form-label">Room Type</label>
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Please select the room's type</option>
+                <option value="1">Single</option>
+                <option value="2">Double</option>
+                <option value="3">Queen</option>
+                <option value="4">King</option>
+                <option value="5">Twin</option>
+                <option value="6">Suite</option>
+                <option value="7">Appartament</option>
+              </select>
+        </div>
+        
+        <!-- Som space between controls-->
+        <h1> </h1>
+
+        <!-- Smoking allowed checkbok -->
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="smokingCheck">
+                <label class="form-check-label" for="smokingCheck">
+                  Smoking Allowed
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add a room Button-->
+        <button type="submit" class="btn btn-primary mx-auto d-block">Add the new room</button>
+
 {% endblock %}
