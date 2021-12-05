@@ -4,7 +4,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'bf2bd361-3c2f-4676-97e1-cd85ea71d9de'
 
-    from .views import views
+    from .routes import views
 
-    app.register_blueprint(views, url_prefix = '/')
+    app.register_blueprint(routes, url_prefix = '/')
     return app
