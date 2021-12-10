@@ -1,4 +1,5 @@
 from flask import Flask
+from .db_manager import db_manager as db
 
 def create_app():
     app = Flask(__name__)
@@ -7,4 +8,7 @@ def create_app():
     from .routes import routes
 
     app.register_blueprint(routes, url_prefix = '/')
+
+    db.init_connection()
+    
     return app
