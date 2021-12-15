@@ -40,5 +40,8 @@ class CDbManager:
     def add_room(self, room):
         room_data = room.get_room_data()
         if room_data != None:
-            self._cursor.execute(INSERT_ROOM_QUERY, room_data)
-            self._conn.commit()
+            try:
+                self._cursor.execute(INSERT_ROOM_QUERY, room_data)
+                self._conn.commit()
+            except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
