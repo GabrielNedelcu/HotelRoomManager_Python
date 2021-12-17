@@ -1,10 +1,15 @@
 import mysql.connector
 from mysql.connector import Error
-from .room import CRoom
+from hotel_room_manager.room import CRoom
+from hotel_room_manager.client import CClient
 
 INSERT_ROOM_QUERY = ("INSERT INTO rooms"
                      "(room_number, floor, room_price, room_type, smoking)"
                      "VALUES (%(room_number)s, %(floor)s, %(room_price)s, %(room_type)s, %(smoking)s)")
+
+INSERT_CLIENT_QUERY = ("INSERT INTO clients"
+                       "(name, surname, birthday, adress, cnp, email, phone)"
+                       "VALUES (%(name)s, %(surname)s, STR_TO_DATE(%(birthday)s,'%d/%m/%Y'), %(adress)s, %(cnp)s, %(email)s, %(phone)s)")
 
 
 class CDbManager:
@@ -45,3 +50,16 @@ class CDbManager:
                 self._conn.commit()
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
+        else:
+            print("Room Data is NULL!! Please DEBUG!!")
+
+    def add_client(self, client):
+        client_data = client.get_client_data()
+        if client_data != None:
+            try:
+                self._cursor.execute(INSERT_CLIENT_QUERY, client_data)
+                self._conn.commit()
+            except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+        else:
+            print("Client Data is NULL!! Please DEBUG!!")

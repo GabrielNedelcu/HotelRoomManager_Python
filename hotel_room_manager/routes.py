@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template
 from flask import request
+from hotel_room_manager.client import CClient
 
 from hotel_room_manager.room import CRoom
 
@@ -42,8 +43,25 @@ def view_room_profile():
     return render_template("room_profile.html")
 
 
-@routes.route('/add-client')
+@routes.route('/add-client', methods=['GET', 'POST'])
 def add_client():
+    # Get client data from form
+    client_name = request.form.get('client_name')
+    client_surname = request.form.get('client_surname')
+    client_adress = request.form.get('client_adress')
+    client_birthday = request.form.get('client_birthday')
+    client_cnp = request.form.get('client_cnp')
+    client_email = request.form.get('client_email')
+    client_phone = request.form.get('client_phone')
+    client_picture = request.form.get('client_picture')
+
+    client = CClient(client_name, client_surname, client_birthday, client_adress,
+                     client_cnp, client_email, client_phone)
+
+    # print(client.get_client_data())
+
+    data_manager.add_client(client)
+
     return render_template("insert_client.html")
 
 

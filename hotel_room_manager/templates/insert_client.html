@@ -1,14 +1,9 @@
-{% extends "base.html" %} 
-
-{% block title %} 
-    Add a Client 
-{% endblock %} 
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Add a Client {% endblock %} {% block
+content %}
 
 <h1 align="center">Add a client</h1>
 
-<form class="row g-3">
+<form class="row g-3" method="post">
   <!-- Client Name -->
   <div class="col-md-6">
     <label for="inputName" class="form-label">Name</label>
@@ -16,6 +11,7 @@
       type="text"
       class="form-control"
       id="inputName"
+      name="client_name"
       placeholder="Popescu"
     />
   </div>
@@ -27,6 +23,7 @@
       type="text"
       class="form-control"
       id="inputSurname"
+      name="client_surname"
       placeholder="Ion"
     />
   </div>
@@ -38,6 +35,7 @@
       type="text"
       class="form-control"
       id="inputAddress"
+      name="client_adress"
       placeholder="1234 Main St"
     />
   </div>
@@ -49,6 +47,7 @@
       type="text"
       class="form-control"
       id="inputDoB"
+      name="client_birthday"
       placeholder="12/02/2021"
     />
   </div>
@@ -60,6 +59,7 @@
       type="number"
       class="form-control"
       id="inputCNP"
+      name="client_cnp"
       placeholder="6211201018187"
     />
   </div>
@@ -71,6 +71,7 @@
       type="email"
       class="form-control"
       id="inputEmail"
+      name="client_email"
       placeholder="popescu.ion@gmail.com"
     />
   </div>
@@ -82,13 +83,19 @@
       type="number"
       class="form-control"
       id="inputPhoneNumber"
+      name="client_phone"
       placeholder="0714151618"
     />
   </div>
 
   <div class="col-12">
     <label for="inputPicture" class="form-label">Profile Picture</label>
-    <input class="form-control" type="file" id="inputPicture" />
+    <input
+      class="form-control"
+      type="file"
+      id="inputPicture"
+      name="client_picture"
+    />
   </div>
 
   <!-- Add the new Client Button -->
