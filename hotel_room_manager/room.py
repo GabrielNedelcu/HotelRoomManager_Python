@@ -7,12 +7,12 @@ class CRoom:
     _type = 0
     _smoking = False
 
-    def __init__(self, number, floor, price, type, smoking):
-        self._number = int(number or 0)
-        self._floor = int(floor or 0)
-        self._price = float(price or 0)
-        self._type = int(type or 0)
-        self._smoking = True if smoking == 'on' else False
+    def __init__(self, data):
+        self._number = int(data.get('room_number') or 0)
+        self._floor = int(data.get('room_floor') or 0)
+        self._price = float(data.get('room_price') or 0)
+        self._type = int(data.get('room_type') or 0)
+        self._smoking = True if data.get('room_smoking') == 'on' else False
 
     def get_room_data(self):
         data = {

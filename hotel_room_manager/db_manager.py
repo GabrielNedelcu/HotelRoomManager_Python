@@ -9,7 +9,9 @@ INSERT_ROOM_QUERY = ("INSERT INTO rooms"
 
 INSERT_CLIENT_QUERY = ("INSERT INTO clients"
                        "(name, surname, birthday, adress, cnp, email, phone)"
-                       "VALUES (%(name)s, %(surname)s, STR_TO_DATE(%(birthday)s,'%d/%m/%Y'), %(adress)s, %(cnp)s, %(email)s, %(phone)s)")
+                       "VALUES (%(name)s, %(surname)s, STR_TO_DATE(%(birthday)s,'%m/%d/%Y'), %(adress)s, %(cnp)s, %(email)s, %(phone)s)")
+
+GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
 
 class CDbManager:
@@ -63,3 +65,15 @@ class CDbManager:
                 print("Error: {}".format(err))
         else:
             print("Client Data is NULL!! Please DEBUG!!")
+
+    def get_all_rooms(self):
+        rooms_data = None
+        try:
+            self._cursor.execute(GET_ALL_ROOMS)
+            rooms_data = self._cursor.fetchall()
+            if rooms_data != None:
+                return rooms_data
+            else:
+                print("Rooms Data is NULL!!! Please DEBUG!!")
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))

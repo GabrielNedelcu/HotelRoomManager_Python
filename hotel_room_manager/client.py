@@ -8,14 +8,14 @@ class CClient:
     _email = ""
     _phone = 0
 
-    def __init__(self, name, surname, birthday, adress, cnp, email, phone):
-        self._name = name
-        self._surname = surname
-        self._birthday = birthday
-        self._adress = adress
-        self._cnp = cnp
-        self._email = email
-        self._phone = phone
+    def __init__(self, data):
+        self._name = data.get('client_name')
+        self._surname = data.get('client_surname')
+        self._birthday = data.get('client_birthday')
+        self._adress = data.get('client_adress')
+        self._cnp = data.get('client_cnp')
+        self._email = data.get('client_email')
+        self._phone = data.get('client_phone')
 
     def get_client_data(self):
         data = {

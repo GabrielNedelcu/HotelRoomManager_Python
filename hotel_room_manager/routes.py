@@ -18,8 +18,10 @@ def home():
     return render_template("home.html")
 
 
-@routes.route('/view-rooms')
+@routes.route('/view-rooms', methods=['POST', 'GET'])
 def view_rooms():
+    all_rooms = data_manager.get_all_rooms()
+    print(all_rooms)
     return render_template("all_rooms.html")
 
 
@@ -43,42 +45,20 @@ def view_room_profile():
     return render_template("room_profile.html")
 
 
-@routes.route('/add-client', methods=['GET', 'POST'])
+@routes.route('/add-client', methods=['POST', 'GET'])
 def add_client():
     # Get client data from form
-    client_name = request.form.get('client_name')
-    client_surname = request.form.get('client_surname')
-    client_adress = request.form.get('client_adress')
-    client_birthday = request.form.get('client_birthday')
-    client_cnp = request.form.get('client_cnp')
-    client_email = request.form.get('client_email')
-    client_phone = request.form.get('client_phone')
-    client_picture = request.form.get('client_picture')
-
-    client = CClient(client_name, client_surname, client_birthday, client_adress,
-                     client_cnp, client_email, client_phone)
-
-    # print(client.get_client_data())
+    client = CClient(request.form)
 
     data_manager.add_client(client)
 
     return render_template("insert_client.html")
 
 
-@routes.route('/add-room', methods=['GET', 'POST'])
+@routes.route('/add-room', methods=['POST', 'GET'])
 def add_room():
     # Get room data from form
-    room_number = request.form.get('room_number')
-    room_price = request.form.get('room_price')
-    room_floor = request.form.get('room_floor')
-    room_type = request.form.get('room_type')
-    room_smoking = request.form.get('room_smoking')
-
-    room = CRoom(room_number, room_floor,
-                 room_price, room_type, room_smoking)
-
-    # data_manager.check_connection()
-    # print(room.get_room_data())
+    room = CRoom(request.form)
     data_manager.add_room(room)
     return render_template("insert_room.html")
 
