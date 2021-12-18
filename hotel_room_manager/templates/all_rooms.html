@@ -1,37 +1,12 @@
-{% extends "base.html" %}
+{% from 'macros.html' import data_table %} 
 
-{% block title %}
-    View Rooms
-{% endblock %}
+{% extends "base.html" %} 
+
+{% block title %} 
+    View Rooms 
+{% endblock %} 
 
 {% block content %}
-    <h1 align="center"> All rooms</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Room Number</th>
-              <th scope="col">Floor</th>
-              <th scope="col">Room Type</th>
-              <th scope="col">Price per Night</th>
-              <th scope="col">View Room</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>101</td>
-              <td>1</td>
-              <td>Presidential</td>
-              <td>75</td>
-              <td>
-                <button type="button" class="btn btn-primary">View Room</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger">Delete Room</button>
-              </td>
-            </tr>
-          </tbody>
-    </table>
+    <h1 align="center">All rooms</h1>
+    {{ data_table(headings, data) }} 
 {% endblock %}

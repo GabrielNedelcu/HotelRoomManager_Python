@@ -1,3 +1,5 @@
+{% from 'macros.html' import data_table %} 
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -6,7 +8,8 @@
 
 {% block content %}
     <h1 align="center"> All clients</h1>
-
+    {{ data_table(headings, data) }} 
+    <!--
     <table class="table table-hover">
         <thead>
             <tr>
@@ -41,4 +44,5 @@
             </tr>
           </tbody>
     </table>
+  -->
 {% endblock %}

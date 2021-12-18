@@ -22,18 +22,24 @@ def home():
 @routes.route('/view-rooms', methods=['POST', 'GET'])
 def view_rooms():
     all_rooms = data_manager.get_all_rooms()
+    table_headings = ("ID", "Room Number", "Floor", "Price per Night", "Room Type",
+                      "Smoking allowed", "Next avaliable date", "View Room", "Delete Room")
     print(all_rooms)
-    return render_template("all_rooms.html")
+    return render_template("all_rooms.html", data=all_rooms, headings=table_headings)
 
 
-@routes.route('/view-clients')
+@routes.route('/view-clients', methods=['POST', 'GET'])
 def view_clients():
-    return render_template("all_clients.html")
+    all_clients = data_manager.get_all_clients()
+    table_headings = ("ID", "Name", "Surname", "Birthday", "Adress", "CNP", "Email",
+                      "Phone", "Picture", "View Client", "Delete Client")
+    return render_template("all_clients.html", data=all_clients, headings=table_headings)
 
 
-@routes.route('/view-reservations')
+@routes.route('/view-reservations', methods=['POST', 'GET'])
 def view_reservations():
-    return render_template("all_reservations.html")
+    all_reservations = data_manager.get_all_reservations()
+    return render_template("all_reservations.html", data=all_reservations, headings=table_headings)
 
 
 @routes.route('/client-profile')

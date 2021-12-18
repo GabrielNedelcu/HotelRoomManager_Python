@@ -8,6 +8,10 @@ INSERT_CLIENT_QUERY = ("INSERT INTO clients"
 
 GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
+GET_ALL_CLIENTS = ("SELECT * FROM clients")
+
+GET_ALL_RESERVATIONS = ("SELECT * FROM reservations")
+
 INSERT_RESERVATION_QUERY = ("INSERT INTO reservations"
                             "(idroom, idclient, start_date, end_date, parking, breakfast, dinner)"
                             "VALUES (%(idroom)s, %(idclient)s, STR_TO_DATE(%(start_date)s,'%m/%d/%Y'), STR_TO_DATE(%(end_date)s,'%m/%d/%Y'), %(parking)s, %(breakfast)s, %(dinner)s)")

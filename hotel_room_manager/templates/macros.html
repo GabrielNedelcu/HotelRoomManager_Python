@@ -1,0 +1,30 @@
+{% macro heading_row(headings) %}
+<thead>
+  <tr>
+    {% for header in headings %}
+    <th scope="col">{{ header }}</th>
+    {% endfor %}
+  </tr>
+</thead>
+
+{% endmacro%} {% macro data_rows(data) %}
+<tbody>
+  {% for row in data %}
+  <tr>
+    {% for cell in row %}
+    <td>{{ cell }}</td>
+    {% endfor %}
+    <td>
+      <button type="button" class="btn btn-primary">View Room</button>
+    </td>
+    <td>
+      <button type="button" class="btn btn-danger">Delete Room</button>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endmacro%} {% macro data_table(headings, data) %}
+<table class="table table-hover">
+  {{ heading_row(headings) }} {{ data_rows(data) }}
+</table>
+{% endmacro %}

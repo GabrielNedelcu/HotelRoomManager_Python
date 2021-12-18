@@ -4,6 +4,10 @@ from hotel_room_manager.room import CRoom
 from hotel_room_manager.client import CClient
 import hotel_room_manager.query_definition as qd
 
+import logging
+import sys
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+
 
 class CDbManager:
     _conn = None
@@ -44,7 +48,7 @@ class CDbManager:
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
-            print("Room Data is NULL!! Please DEBUG!!")
+            logging.debug(" * Room Data is NULL!! Please DEBUG!!")
 
     def add_client(self, client):
         client_data = client.get_client_data()
@@ -55,7 +59,7 @@ class CDbManager:
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
-            print("Client Data is NULL!! Please DEBUG!!")
+            logging.debug(" * Client Data is NULL!! Please DEBUG!!")
 
     def add_reservation(self, reservation):
         reservation_data = reservation.get_reservation_data()
@@ -68,7 +72,7 @@ class CDbManager:
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
-            print("Reservation Data is NULL!! Please DEBUG!!")
+            logging.debug(" * Reservation Data is NULL!! Please DEBUG!!")
 
     def get_all_rooms(self):
         rooms_data = None
@@ -78,6 +82,30 @@ class CDbManager:
             if rooms_data != None:
                 return rooms_data
             else:
-                print("Rooms Data is NULL!!! Please DEBUG!!")
+                logging.debug(" * Rooms Data is NULL!!! Please DEBUG!!")
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_all_clients(self):
+        clients_data = None
+        try:
+            self._cursor.execute(qd.GET_ALL_CLIENTS)
+            rooms_data = self._cursor.fetchall()
+            if rooms_data != None:
+                return rooms_data
+            else:
+                logging.debug(' * Clients Data is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_all_reservations(self):
+        reservations_data = None
+        try:
+            self._cursor.execute(qd.GET_ALL_RESERVATIONS)
+            reservations_data = self._cursor.fetchall()
+            if reservations_data != None:
+                return reservations_data
+            else:
+                logging.debug(' * Reservatoins Data is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
