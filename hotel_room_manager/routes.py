@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import render_template
 from flask import request
 from hotel_room_manager.client import CClient
+from hotel_room_manager.reservation import CReservation
 
 from hotel_room_manager.room import CRoom
 
@@ -63,6 +64,10 @@ def add_room():
     return render_template("insert_room.html")
 
 
-@routes.route('/make-reservation')
+@routes.route('/make-reservation', methods=['POST', 'GET'])
 def add_reservation():
+    # Get reservation data from form
+    reservation = CReservation(request.form)
+
+    data_manager.add_reservation(reservation)
     return render_template("make_reservation.html")

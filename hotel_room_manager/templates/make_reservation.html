@@ -1,20 +1,21 @@
-{% extends "base.html" %} 
-
-{% block title %} 
-    Make a Reservation 
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Make a Reservation {% endblock %} {%
+block content %}
 
 <h1 align="center">Make a new reservation</h1>
 
-<form class="row g-3">
-    <h1> </h1>
+<form class="row g-3" method="post">
+  <h1></h1>
   <!-- Room Number Combo -->
   <div class="row mb-3">
-    <label for="inputRoomNumber" class="col-sm-2 col-form-label">Room Number</label>
+    <label for="inputRoomNumber" class="col-sm-2 col-form-label"
+      >Room Number</label
+    >
     <div class="col-sm-10">
-      <select class="form-select" aria-label="Default select example">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="room_id"
+      >
         <option selected>Please select the room's number</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -29,7 +30,11 @@
   <div class="row mb-3">
     <label for="inputClient" class="col-sm-2 col-form-label">Client</label>
     <div class="col-sm-10">
-      <select class="form-select" aria-label="Default select example">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="client_id"
+      >
         <option selected>Please select the Client</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -44,11 +49,12 @@
   <div class="row mb-3">
     <label for="inputDoB" class="col-sm-2 col-form-label">Start Date</label>
     <div class="col-sm-10">
-        <input
+      <input
         type="text"
         class="form-control"
         id="inputStartDate"
         placeholder="12/02/2021"
+        name="start_date"
       />
     </div>
   </div>
@@ -57,11 +63,12 @@
   <div class="row mb-3">
     <label for="inputDoB" class="col-sm-2 col-form-label">End Date</label>
     <div class="col-sm-10">
-        <input
+      <input
         type="text"
         class="form-control"
         id="inputEndDate"
         placeholder="12/02/2021"
+        name="end_date"
       />
     </div>
   </div>
@@ -72,19 +79,34 @@
       <legend class="col-form-label col-sm-2 pt-0">Additional Options</legend>
       <div class="col-sm-10">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="parkingCheck" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="parkingCheck"
+            name="parking_included"
+          />
           <label class="form-check-label" for="parkingCheck">
             Parking Spot
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="breakfastCheck" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="breakfastCheck"
+            name="breakfast_included"
+          />
           <label class="form-check-label" for="breakfastCheck">
             Breakfast Included
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="lunchCheck" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="lunchCheck"
+            name="lunch_included"
+          />
           <label class="form-check-label" for="lunchCheck">
             Lunch Included
           </label>
@@ -102,15 +124,15 @@
 </form>
 
 <script>
-    $("#inputStartDate").datepicker({
-      uiLibrary: "bootstrap4",
-    });
-  </script>
+  $("#inputStartDate").datepicker({
+    uiLibrary: "bootstrap4",
+  });
+</script>
 
 <script>
-    $("#inputEndDate").datepicker({
-      uiLibrary: "bootstrap4",
-    });
-  </script>
+  $("#inputEndDate").datepicker({
+    uiLibrary: "bootstrap4",
+  });
+</script>
 
 {% endblock %}

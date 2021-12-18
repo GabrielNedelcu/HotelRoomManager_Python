@@ -13,6 +13,10 @@ INSERT_CLIENT_QUERY = ("INSERT INTO clients"
 
 GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
+INSERT_RESERVATION_QUERY = ("INSERT INTO reservations"
+                            "(idroom, idclient, start_date, end_date, parking, breakfast, dinner)"
+                            "VALUES (%(idroom)s, %(idclient)s, STR_TO_DATE(%(start_date)s,'%m/%d/%Y'), STR_TO_DATE(%(end_date)s,'%m/%d/%Y'), %(parking)s, %(breakfast)s, %(dinner)s)")
+
 
 class CDbManager:
     _conn = None
@@ -65,6 +69,19 @@ class CDbManager:
                 print("Error: {}".format(err))
         else:
             print("Client Data is NULL!! Please DEBUG!!")
+
+    def add_reservation(self, reservation):
+        reservation_data = reservation.get_reservation_data()
+        if reservation_data != None:
+            try:
+                self._cursor.execute(
+                    INSERT_RESERVATION_QUERY, reservation_data)
+                self._conn.commit()
+                print("Reservation succesfully added!")
+            except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+        else:
+            print("Reservation Data is NULL!! Please DEBUG!!")
 
     def get_all_rooms(self):
         rooms_data = None
