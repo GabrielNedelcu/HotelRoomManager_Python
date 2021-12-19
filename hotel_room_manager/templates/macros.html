@@ -28,3 +28,30 @@
   {{ heading_row(headings) }} {{ data_rows(data) }}
 </table>
 {% endmacro %}
+
+{% macro data_combo_box(control_name, control_data) %}
+<div class="row mb-3">
+    <label for="inputClient" class="col-sm-2 col-form-label">Client</label>
+    <div class="col-sm-10">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name = {{ control_name }}
+      >
+       <option selected>Please select an option</option>
+        {% for row in control_data %}
+          <option value = {{ row[0] }}>
+            <!-- If the row contains 3 cells, we have a client ComboBox (id, name, surname) -->
+            <!-- and we have to build the display string accordingly -->
+            <!-- Else, we have a room ComboBox (id, room_number) --> 
+            {% if row|length > 2 %}
+              {{ row[1] + " " + row[2]}}
+            {% else %}
+              {{ row[1] }}
+            {% endif%}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% endmacro %}

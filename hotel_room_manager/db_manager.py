@@ -109,3 +109,27 @@ class CDbManager:
                 logging.debug(' * Reservatoins Data is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
+
+    def get_client_id_to_name(self):
+        data_set = None
+        try:
+            self._cursor.execute(qd.GET_CLIENT_ID_TO_NAME)
+            data_set = self._cursor.fetchall()
+            if data_set != None:
+                return data_set
+            else:
+                logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_room_id_to_number(self):
+        data_set = None
+        try:
+            self._cursor.execute(qd.GET_ROOM_ID_TO_NUMBER)
+            data_set = self._cursor.fetchall()
+            if data_set != None:
+                return data_set
+            else:
+                logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))

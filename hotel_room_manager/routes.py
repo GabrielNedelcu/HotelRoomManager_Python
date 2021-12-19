@@ -56,7 +56,6 @@ def view_room_profile():
 def add_client():
     # Get client data from form
     client = CClient(request.form)
-
     data_manager.add_client(client)
 
     return render_template("insert_client.html")
@@ -74,6 +73,8 @@ def add_room():
 def add_reservation():
     # Get reservation data from form
     reservation = CReservation(request.form)
-
+    all_clients = data_manager.get_client_id_to_name()
+    all_rooms = data_manager.get_room_id_to_number()
+    print(all_clients)
     data_manager.add_reservation(reservation)
-    return render_template("make_reservation.html")
+    return render_template("make_reservation.html", clients_combo_name="client_id", rooms_combo_name="room_id", clients_combo_data=all_clients, rooms_combo_data=all_rooms)
