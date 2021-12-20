@@ -50,11 +50,6 @@ def view_client_profile():
 
 @routes.route('/room-profile/<room_id>', methods=['POST', 'GET'])
 def view_room_profile(room_id):
-    room = data_manager.get_room_at_id(room_id)
-    room_data = room.get_room_data()
-    selected_floor = room_data['floor'] - 1
-    selected_room_type = int(room_data['room_type'] or 0) - 1
-    print(room.get_room_data())
     floor_combo_data = [
         (1, '1'),
         (2, '2'),
@@ -73,10 +68,25 @@ def view_room_profile(room_id):
         (7, 'Appartament')
     ]
 
+    table_headings = ["Reservation ID", "Client Name", "Client Surname", "Client Phone Number",
+                      "Start Date", "End Date", "View Reservation Details", "Delete Record"]
+    if request.method == "POST":
+        room_obj = CRoom()
+        room_obj.construct_from_form_data(request.form)
+        data_manager.update_room(room_id, room_obj)
+
+    reservation_history = data_manager.get_room_reservation_history(room_id)
+    room = data_manager.get_room_at_id(room_id)
+    room_data = room.get_room_data()
+    selected_floor = room_data['floor'] - 1
+    selected_room_type = int(room_data['room_type'] or 0) - 1
+    print(room.get_room_data())
+
     return render_template("room_profile.html",
                            room_data=room.get_room_data(),
                            floor_combo_label_text="Floor", floor_combo_name='room_floor', floor_combo_data=floor_combo_data, floor_selected_option=selected_floor,
-                           type_combo_label_text="Room Type", type_combo_name='room_type', type_combo_data=room_type_combo_data, type_selected_option=selected_room_type)
+                           type_combo_label_text="Room Type", type_combo_name='room_type', type_combo_data=room_type_combo_data, type_selected_option=selected_room_type,
+                           headings=table_headings, data=reservation_history, view_redirect_page='/view-reservations', delete_redirect_page="/delete-reservation")
 
 
 @routes.route('/delete-room/<room_id>', methods=['POST', 'GET'])

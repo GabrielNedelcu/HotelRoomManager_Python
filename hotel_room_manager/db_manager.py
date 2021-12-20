@@ -155,7 +155,32 @@ class CDbManager:
         logging.info(' * Deleting the room with the ID = %s' % id)
         try:
             self._cursor.execute(qd.DELETE_ROOM % id)
-            data_set = self._cursor.fetchall()
+            self._conn.commit()
             logging.info(' * Room deleted SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def update_room(self, id, room):
+        logging.info(' * Updating the room with the ID = %s' % id)
+        room_data = room.get_room_data()
+        try:
+            self._cursor.execute(qd.UPDATE_ROOM %
+                                 (room_data['room_number'], room_data['floor'], room_data['room_price'], room_data['room_type'], int(room_data['smoking'] == True), id))
+            self._conn.commit()
+            logging.info(' * Room updated SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_room_reservation_history(self, idroom):
+        logging.info(
+            ' * Getting the reservation history for the room with the ID = %s' % id)
+        try:
+            self._cursor.execute(qd.SELECT_RESERVATIONS_FOR_ROOM % idroom)
+            data_set = self._cursor.fetchall()
+            # print("INNER")
+            # print(data_set)
+            logging.info(
+                ' * History fetched SUCCESSFULLY - %d records' % len(data_set))
+            return data_set
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))

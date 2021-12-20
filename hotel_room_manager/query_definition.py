@@ -23,3 +23,13 @@ GET_ROOM_ID_TO_NUMBER = ("SELECT idroom, room_number FROM rooms")
 GET_ROOM_AT_ID = ("SELECT * FROM rooms WHERE idroom = '%s'")
 
 DELETE_ROOM = ("DELETE FROM rooms WHERE idroom = '%s'")
+
+UPDATE_ROOM = ("UPDATE rooms "
+               "SET room_number = '%s', floor = '%s', room_price = '%s', room_type = '%s', smoking ='%s'"
+               "WHERE idroom = '%s'")
+
+SELECT_RESERVATIONS_FOR_ROOM = ("SELECT "
+                                "reservations.idreservation, clients.name, clients.surname, clients.phone, reservations.start_date, reservations.end_date "
+                                "FROM reservations "
+                                "INNER JOIN clients ON reservations.idclient = clients.idclient "
+                                "WHERE idroom = '%s'")
