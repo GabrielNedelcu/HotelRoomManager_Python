@@ -15,7 +15,9 @@
     <td>{{ cell }}</td>
     {% endfor %}
     <td>
-      <button type="button" class="btn btn-primary">View Room</button>
+      <a href="/room-profile/{{ row[0] }}">
+        <button type="button" class="btn btn-primary">View Room</button>
+      </a>
     </td>
     <td>
       <button type="button" class="btn btn-danger">Delete Room</button>
@@ -29,18 +31,25 @@
 </table>
 {% endmacro %}
 
-{% macro data_combo_box(control_name, control_data) %}
+{% macro data_combo_box(label_text, control_name, control_data, selected_option) %}
 <div class="row mb-3">
-    <label for="inputClient" class="col-sm-2 col-form-label">Client</label>
+    <label for="inputClient" class="col-sm-2 col-form-label">{{label_text}}</label>
     <div class="col-sm-10">
       <select
         class="form-select"
         aria-label="Default select example"
         name = {{ control_name }}
       >
-       <option selected>Please select an option</option>
+       {% if selected_option < 0 %}
+          <option selected>Please select an option</option>
+       {% endif %}
+       <!-- <option selected>Please select an option</option> -->
         {% for row in control_data %}
-          <option value = {{ row[0] }}>
+          {% if selected_option == loop.index0 %}
+            <option value = {{ row[0] }} selected>
+          {% else %}
+            <option value = {{ row[0] }}>
+          {% endif %}
             <!-- If the row contains 3 cells, we have a client ComboBox (id, name, surname) -->
             <!-- and we have to build the display string accordingly -->
             <!-- Else, we have a room ComboBox (id, room_number) --> 

@@ -133,3 +133,20 @@ class CDbManager:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
+
+    def get_room_at_id(self, id):
+        logging.info(' * Getting room data at ID = %s' % id)
+        room = None
+        data_set = None
+        try:
+            self._cursor.execute(qd.GET_ROOM_AT_ID % id)
+            data_set = self._cursor.fetchall()
+            if data_set != None:
+                print(data_set)
+                room = CRoom()
+                room.construct_from_db_data(data_set)
+                return room
+            else:
+                logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))

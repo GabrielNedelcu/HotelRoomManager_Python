@@ -19,3 +19,5 @@ GET_ALL_RESERVATIONS = ("SELECT * FROM reservations")
 GET_CLIENT_ID_TO_NAME = ("SELECT idclient, name, surname FROM clients")
 
 GET_ROOM_ID_TO_NUMBER = ("SELECT idroom, room_number FROM rooms")
+
+GET_ROOM_AT_ID = ("SELECT * FROM rooms WHERE idroom = '%s'")

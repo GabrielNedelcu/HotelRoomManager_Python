@@ -7,10 +7,10 @@ block content %}
 <form class="row g-3" method="post">
   <h1></h1>
   <!-- Room ComboBox -->
-  {{ data_combo_box(rooms_combo_name, rooms_combo_data) }}
+  {{ data_combo_box(rooms_combo_label_text, rooms_combo_name, rooms_combo_data, rooms_selected_option) }}
 
   <!-- Clients ComboBox -->
-  {{ data_combo_box(clients_combo_name, clients_combo_data) }}
+  {{ data_combo_box(clients_combo_label_text, clients_combo_name, clients_combo_data, clients_selected_option) }}
 
   <!-- Start Date-->
   <div class="row mb-3">
