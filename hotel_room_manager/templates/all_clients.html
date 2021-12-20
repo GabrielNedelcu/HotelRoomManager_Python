@@ -8,41 +8,6 @@
 
 {% block content %}
     <h1 align="center"> All clients</h1>
-    {{ data_table(headings, data, 0) }} 
-    <!--
-    <table class="table table-hover">
-        <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Surname</th>
-              <th scope="col">Adress</th>
-              <th scope="col">Date of Birth</th>
-              <th scope="col">Social Security Number</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
-              <th scope="col">View Room</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Popescu</td>
-              <td>Ion</td>
-              <td>Bucuresti</td>
-              <td>12/02/2021</td>
-              <td>6211201018187</td>
-              <td>popescu.ion@gmail.com</td>
-              <td>0714151618</td>
-              <td>
-                <button type="button" class="btn btn-primary">View Room</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger">Delete Room</button>
-              </td>
-            </tr>
-          </tbody>
-    </table>
-  -->
+
+    {{ data_table(headings, data, view_redirect_page, delete_redirect_page) }} 
 {% endblock %}

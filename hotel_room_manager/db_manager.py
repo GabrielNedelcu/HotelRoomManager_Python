@@ -150,3 +150,12 @@ class CDbManager:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
+
+    def delete_room(self, id):
+        logging.info(' * Deleting the room with the ID = %s' % id)
+        try:
+            self._cursor.execute(qd.DELETE_ROOM % id)
+            data_set = self._cursor.fetchall()
+            logging.info(' * Room deleted SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))

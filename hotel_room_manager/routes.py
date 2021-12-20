@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template
 from flask import request
+from flask import redirect
 from hotel_room_manager.client import CClient
 from hotel_room_manager.reservation import CReservation
 
@@ -25,7 +26,7 @@ def view_rooms():
     table_headings = ("ID", "Room Number", "Floor", "Price per Night", "Room Type",
                       "Smoking allowed", "Next avaliable date", "View Room", "Delete Room")
     print(all_rooms)
-    return render_template("all_rooms.html", data=all_rooms, headings=table_headings)
+    return render_template("all_rooms.html", data=all_rooms, headings=table_headings, view_redirect_page="/room-profile", delete_redirect_page="/delete-room")
 
 
 @routes.route('/view-clients', methods=['POST', 'GET'])
@@ -33,7 +34,7 @@ def view_clients():
     all_clients = data_manager.get_all_clients()
     table_headings = ("ID", "Name", "Surname", "Birthday", "Adress", "CNP", "Email",
                       "Phone", "Picture", "View Client", "Delete Client")
-    return render_template("all_clients.html", data=all_clients, headings=table_headings)
+    return render_template("all_clients.html", data=all_clients, headings=table_headings, view_redirect_page="/client-profile", delete_redirect_page="/delete-client")
 
 
 @routes.route('/view-reservations', methods=['POST', 'GET'])
@@ -76,6 +77,12 @@ def view_room_profile(room_id):
                            room_data=room.get_room_data(),
                            floor_combo_label_text="Floor", floor_combo_name='room_floor', floor_combo_data=floor_combo_data, floor_selected_option=selected_floor,
                            type_combo_label_text="Room Type", type_combo_name='room_type', type_combo_data=room_type_combo_data, type_selected_option=selected_room_type)
+
+
+@routes.route('/delete-room/<room_id>', methods=['POST', 'GET'])
+def delete_room(room_id):
+    data_manager.delete_room(room_id)
+    return redirect('/view-rooms')
 
 
 @routes.route('/add-client', methods=['POST', 'GET'])
