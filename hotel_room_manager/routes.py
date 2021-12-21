@@ -43,9 +43,25 @@ def view_reservations():
     return render_template("all_reservations.html", data=all_reservations, headings=table_headings)
 
 
-@routes.route('/client-profile')
-def view_client_profile():
-    return render_template("client_profile.html")
+@routes.route('/client-profile/<client_id>', methods=['POST', 'GET'])
+def view_client_profile(client_id):
+
+    table_headings = ["Reservation ID", "Room Number", "Start Date",
+                      "End Date", "View Reservation Details", "Delete Record"]
+
+    if request.method == "POST":
+        client_obj = CClient()
+        client_obj.construct_from_form_data(request.form)
+        data_manager.update_client(client_id, client_obj)
+
+    client = data_manager.get_client_at_id(client_id)
+    client_data = client.get_client_data()
+
+    reservation_history = data_manager.get_client_reservation_history(
+        client_id)
+
+    return render_template("client_profile.html", client_data=client_data,
+                           headings=table_headings, data=reservation_history, view_redirect_page='/view-reservations', delete_redirect_page="/delete-reservation")
 
 
 @routes.route('/room-profile/<room_id>', methods=['POST', 'GET'])
@@ -70,6 +86,7 @@ def view_room_profile(room_id):
 
     table_headings = ["Reservation ID", "Client Name", "Client Surname", "Client Phone Number",
                       "Start Date", "End Date", "View Reservation Details", "Delete Record"]
+
     if request.method == "POST":
         room_obj = CRoom()
         room_obj.construct_from_form_data(request.form)
@@ -95,10 +112,17 @@ def delete_room(room_id):
     return redirect('/view-rooms')
 
 
+@routes.route('/delete-client/<client_id>', methods=['POST', 'GET'])
+def delete_client(client_id):
+    data_manager.delete_client(client_id)
+    return redirect('/view-clients')
+
+
 @routes.route('/add-client', methods=['POST', 'GET'])
 def add_client():
     # Get client data from form
-    client = CClient(request.form)
+    client = CClient()
+    client.construct_from_form_data(request.form)
     data_manager.add_client(client)
 
     return render_template("insert_client.html")

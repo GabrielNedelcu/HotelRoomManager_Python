@@ -184,3 +184,54 @@ class CDbManager:
             return data_set
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
+
+    def get_client_at_id(self, id):
+        logging.info(' * Getting client data at ID = %s' % id)
+        client = None
+        client_set = None
+        try:
+            self._cursor.execute(qd.GET_CLIENT_AT_ID % id)
+            data_set = self._cursor.fetchall()
+            if data_set != None:
+                print(data_set)
+                client = CClient()
+                client.construct_from_db_data(data_set)
+                return client
+            else:
+                logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_client_reservation_history(self, idclient):
+        logging.info(
+            ' * Getting the reservation history for the client with the ID = %s' % id)
+        try:
+            self._cursor.execute(qd.SELECT_RESERVATIONS_FOR_CLIENT % idclient)
+            data_set = self._cursor.fetchall()
+            # print("INNER")
+            # print(data_set)
+            logging.info(
+                ' * History fetched SUCCESSFULLY - %d records' % len(data_set))
+            return data_set
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def update_client(self, id, client):
+        logging.info(' * Updating the client with the ID = %s' % id)
+        client_data = client.get_client_data()
+        try:
+            self._cursor.execute(qd.UPDATE_CLIENT %
+                                 (client_data['name'], client_data['surname'], client_data['birthday'], client_data['adress'], client_data['cnp'], client_data['email'], client_data['phone'], id))
+            self._conn.commit()
+            logging.info(' * Client updated SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def delete_client(self, id):
+        logging.info(' * Deleting the client with the ID = %s' % id)
+        try:
+            self._cursor.execute(qd.DELETE_CLIENT % id)
+            self._conn.commit()
+            logging.info(' * Client deleted SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
