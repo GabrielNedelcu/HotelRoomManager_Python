@@ -14,7 +14,7 @@ GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
 GET_ALL_CLIENTS = ("SELECT * FROM clients")
 
-GET_ALL_RESERVATIONS = ("SELECT * FROM reservations")
+#GET_ALL_RESERVATIONS = ("SELECT * FROM reservations")
 
 GET_CLIENT_ID_TO_NAME = ("SELECT idclient, name, surname FROM clients")
 
@@ -47,3 +47,12 @@ UPDATE_CLIENT = ("UPDATE clients "
                  "WHERE idclient = '%s'")
 
 DELETE_CLIENT = ("DELETE FROM clients WHERE idclient = '%s'")
+
+GET_ALL_RESERVATIONS = ("SELECT "
+                        "reservations.idreservation, "
+                        "reservations.idroom, rooms.room_number, "
+                        "reservations.idclient, clients.name, clients.surname, "
+                        "reservations.start_date, reservations.end_date, reservations.parking, reservations.breakfast, reservations.dinner, reservations.total_price "
+                        "FROM reservations "
+                        "INNER JOIN rooms ON reservations.idroom = rooms.idroom "
+                        "INNER JOIN clients ON reservations.idclient = clients.idclient")

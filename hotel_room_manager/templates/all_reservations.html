@@ -1,55 +1,55 @@
 {% extends "base.html" %}
 
+{% from 'macros.html' import data_table %} 
+
 {% block title %}
     View Reservations
 {% endblock %}
 
 {% block content %}
-    <h1> All reservations</h1>
-    <table class="table table-hover">
+  <h1 align="center"> Reservations history</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <table class="table table-hover">
         <thead>
+          <tr>
+            {% for header in headings %}
+              <th scope="col"> {{ header }} </th>
+            {% endfor %}
+          </tr>
+        </thead>
+      
+        <tbody>
+          {% for row in data %}
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Room Number</th>
-              <th scope="col">Client Name</th>
-              <th scope="col">Client Surname</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Parking Spot</th>
-              <th scope="col">Breakfast Included</th>
-              <th scope="col">Dinner Included</th>
-              <th scope="col">View Room</th>
-              <th scope="col">View Client</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>101</td>
-              <td>Popescu</td>
-              <td>Ion</td>
-              <td>12/02/2021</td>
-              <td>12/02/2021</td>
+              {% for cell in row %}
+                <td> {{ cell }} </td>
+              {% endfor %}
               <td>
-                <input class="form-check-input" type="checkbox" value="" checked disabled>
+                <a href="/room-profile/{{ row[0] }}">
+                  <button type="button" class="btn btn-primary">Edit Room</button>
+                </a>
               </td>
               <td>
-                <input class="form-check-input" type="checkbox" value="" disabled>
+                <a href="/client-profile/{{ row[0] }}">
+                  <button type="button" class="btn btn-primary">Edit Client</button>
+                </a>
               </td>
               <td>
-                <input class="form-check-input" type="checkbox" value="" checked disabled>
+                <a href="/{{ row[0] }}">
+                  <button type="button" class="btn btn-primary">Edit Reservation</button>
+                </a>
               </td>
               <td>
-                <button type="button" class="btn btn-primary">View Room</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-primary">View Client</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger">Delete Room</button>
+                <a href="/{{ row[0] }}">
+                  <button type="button" class="btn btn-danger">Delete Reservation</button>
+                </a>
               </td>
             </tr>
-          </tbody>
-    </table>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

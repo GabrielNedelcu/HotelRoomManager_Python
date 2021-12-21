@@ -98,18 +98,6 @@ class CDbManager:
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
 
-    def get_all_reservations(self):
-        reservations_data = None
-        try:
-            self._cursor.execute(qd.GET_ALL_RESERVATIONS)
-            reservations_data = self._cursor.fetchall()
-            if reservations_data != None:
-                return reservations_data
-            else:
-                logging.debug(' * Reservatoins Data is NULL!!! Please DEBUG!!')
-        except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
-
     def get_client_id_to_name(self):
         data_set = None
         try:
@@ -233,5 +221,17 @@ class CDbManager:
             self._cursor.execute(qd.DELETE_CLIENT % id)
             self._conn.commit()
             logging.info(' * Client deleted SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_all_reservations(self):
+        logging.info(' * Getting all the reservations')
+        data_set = None
+        try:
+            self._cursor.execute(qd.GET_ALL_RESERVATIONS)
+            data_set = self._cursor.fetchall()
+            logging.info(
+                ' * Reservations fetched SUCCESSFULLY - %d records' % len(data_set))
+            return data_set
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))

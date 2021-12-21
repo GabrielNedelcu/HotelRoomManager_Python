@@ -24,7 +24,7 @@ def home():
 def view_rooms():
     all_rooms = data_manager.get_all_rooms()
     table_headings = ("ID", "Room Number", "Floor", "Price per Night", "Room Type",
-                      "Smoking allowed", "Next avaliable date", "View Room", "Delete Room")
+                      "Smoking allowed", "Next avaliable date", "Edit Room", "Delete Room")
     print(all_rooms)
     return render_template("all_rooms.html", data=all_rooms, headings=table_headings, view_redirect_page="/room-profile", delete_redirect_page="/delete-room")
 
@@ -33,13 +33,18 @@ def view_rooms():
 def view_clients():
     all_clients = data_manager.get_all_clients()
     table_headings = ("ID", "Name", "Surname", "Birthday", "Adress", "CNP", "Email",
-                      "Phone", "Picture", "View Client", "Delete Client")
+                      "Phone", "Picture", "Edit Client", "Delete Client")
     return render_template("all_clients.html", data=all_clients, headings=table_headings, view_redirect_page="/client-profile", delete_redirect_page="/delete-client")
 
 
 @routes.route('/view-reservations', methods=['POST', 'GET'])
 def view_reservations():
     all_reservations = data_manager.get_all_reservations()
+    print(all_reservations)
+    table_headings = ["Reservation ID", "Room ID", "Room Number",
+                      "Client ID", "Client Name", "Client Surname",
+                      "Start Date", "End Date", "Parking", "Breakfast", "Dinner", "Total Price",
+                      "Room Info", "Client Info", "Reservation Info", "Delete Reservation"]
     return render_template("all_reservations.html", data=all_reservations, headings=table_headings)
 
 
