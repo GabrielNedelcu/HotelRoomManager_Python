@@ -69,6 +69,27 @@ def view_client_profile(client_id):
                            headings=table_headings, data=reservation_history, view_redirect_page='/view-reservations', delete_redirect_page="/delete-reservation")
 
 
+@routes.route('/reservation-profile/<reservation_id>', methods=['POST', 'GET'])
+def view_reservation_profile(reservation_id):
+    all_clients = data_manager.get_client_id_to_name()
+    all_rooms = data_manager.get_room_id_to_number()
+
+    if request.method == "POST":
+        reservation_obj = CReservation()
+        reservation_obj.construct_from_form_data(request.form)
+        data_manager.update_reservation(reservation_id, reservation_obj)
+
+    reservation = data_manager.get_reservation_at_id(reservation_id)
+    reservation_data = reservation.get_reservation_data()
+    selected_room = reservation_data['idroom']
+    selected_client = reservation_data['idclient']
+
+    return render_template("reservation-profile.html",
+                           clients_combo_label_text="Clients", clients_combo_name="client_id", clients_combo_data=all_clients, clients_selected_option=selected_client,
+                           rooms_combo_label_text="Rooms", rooms_combo_name="room_id", rooms_combo_data=all_rooms, rooms_selected_option=selected_room,
+                           reservation_data=reservation_data)
+
+
 @routes.route('/room-profile/<room_id>', methods=['POST', 'GET'])
 def view_room_profile(room_id):
     floor_combo_data = [
@@ -100,8 +121,8 @@ def view_room_profile(room_id):
     reservation_history = data_manager.get_room_reservation_history(room_id)
     room = data_manager.get_room_at_id(room_id)
     room_data = room.get_room_data()
-    selected_floor = room_data['floor'] - 1
-    selected_room_type = int(room_data['room_type'] or 0) - 1
+    selected_floor = room_data['floor']
+    selected_room_type = int(room_data['room_type'] or 0)
     print(room.get_room_data())
 
     return render_template("room_profile.html",
@@ -121,6 +142,12 @@ def delete_room(room_id):
 def delete_client(client_id):
     data_manager.delete_client(client_id)
     return redirect('/view-clients')
+
+
+@routes.route('/delete-reservation/<reservation_id>', methods=['POST', 'GET'])
+def delete_reservation(reservation_id):
+    data_manager.delete_reservation(reservation_id)
+    return redirect('/view-reservations')
 
 
 @routes.route('/add-client', methods=['POST', 'GET'])
@@ -145,7 +172,8 @@ def add_room():
 @routes.route('/make-reservation', methods=['POST', 'GET'])
 def add_reservation():
     # Get reservation data from form
-    reservation = CReservation(request.form)
+    reservation = CReservation()
+    reservation.construct_from_form_data(request.form)
     all_clients = data_manager.get_client_id_to_name()
     all_rooms = data_manager.get_room_id_to_number()
     print(all_clients)

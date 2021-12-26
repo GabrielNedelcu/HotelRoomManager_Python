@@ -51,7 +51,7 @@
        {% endif %}
        <!-- <option selected>Please select an option</option> -->
         {% for row in control_data %}
-          {% if selected_option == loop.index0 %}
+          {% if selected_option == row[0] %}
             <option value = {{ row[0] }} selected>
           {% else %}
             <option value = {{ row[0] }}>

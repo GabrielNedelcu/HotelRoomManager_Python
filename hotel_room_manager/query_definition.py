@@ -56,3 +56,12 @@ GET_ALL_RESERVATIONS = ("SELECT "
                         "FROM reservations "
                         "INNER JOIN rooms ON reservations.idroom = rooms.idroom "
                         "INNER JOIN clients ON reservations.idclient = clients.idclient")
+
+DELETE_RESERVATION = ("DELETE FROM reservations WHERE idreservation = '%s'")
+
+GET_RESERVATION_AT_ID = (
+    "SELECT * FROM reservations WHERE idreservation = '%s'")
+
+UPDATE_RESERVATION = ("UPDATE reservations "
+                      "SET idroom = '%s', idclient = '%s', start_date = STR_TO_DATE('%s','%%m/%%d/%%Y'), end_date = STR_TO_DATE('%s','%%m/%%d/%%Y'), parking = %s, breakfast = %s, dinner = %s "
+                      "WHERE idreservation = '%s'")

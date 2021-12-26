@@ -1,11 +1,13 @@
 import mysql.connector
 from mysql.connector import Error
+from hotel_room_manager.reservation import CReservation
 from hotel_room_manager.room import CRoom
 from hotel_room_manager.client import CClient
 import hotel_room_manager.query_definition as qd
 
 import logging
 import sys
+
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 
@@ -233,5 +235,44 @@ class CDbManager:
             logging.info(
                 ' * Reservations fetched SUCCESSFULLY - %d records' % len(data_set))
             return data_set
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def delete_reservation(self, id):
+        logging.info(' * Deleting the client with the ID = %s' % id)
+        try:
+            self._cursor.execute(qd.DELETE_RESERVATION % id)
+            self._conn.commit()
+            logging.info(' * Reservation deleted SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def get_reservation_at_id(self, id):
+        logging.info(' * Getting reservation data at ID = %s' % id)
+        reservation = None
+        reservation_set = None
+        try:
+            self._cursor.execute(qd.GET_RESERVATION_AT_ID % id)
+            data_set = self._cursor.fetchall()
+            if data_set != None:
+                print(data_set)
+                reservation = CReservation()
+                reservation.construct_from_db_data(data_set)
+                return reservation
+            else:
+                logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def update_reservation(self, id, reservation):
+        logging.info(' * Updating the reservation with the ID = %s' % id)
+        reservation_data = reservation.get_reservation_data()
+        print("-- UPDATING WITH DATA:")
+        print(reservation_data)
+        try:
+            self._cursor.execute(qd.UPDATE_RESERVATION %
+                                 (reservation_data['idroom'], reservation_data['idclient'], reservation_data['start_date'], reservation_data['end_date'], reservation_data['parking'], reservation_data['breakfast'], reservation_data['dinner'], id))
+            self._conn.commit()
+            logging.info(' * Reservation updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
