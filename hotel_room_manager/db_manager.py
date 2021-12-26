@@ -5,6 +5,8 @@ from hotel_room_manager.room import CRoom
 from hotel_room_manager.client import CClient
 import hotel_room_manager.query_definition as qd
 
+from flask import flash
+
 import logging
 import sys
 
@@ -47,6 +49,7 @@ class CDbManager:
             try:
                 self._cursor.execute(qd.INSERT_ROOM_QUERY, room_data)
                 self._conn.commit()
+                flash('Room succesfully added!', category='success')
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
@@ -58,6 +61,7 @@ class CDbManager:
             try:
                 self._cursor.execute(qd.INSERT_CLIENT_QUERY, client_data)
                 self._conn.commit()
+                flash('Client succesfully added!', category='success')
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
@@ -70,7 +74,8 @@ class CDbManager:
                 self._cursor.execute(
                     qd.INSERT_RESERVATION_QUERY, reservation_data)
                 self._conn.commit()
-                print("Reservation succesfully added!")
+                flash('Reservation succesfully added!', category='success')
+                #print("Reservation succesfully added!")
             except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
         else:
@@ -146,6 +151,7 @@ class CDbManager:
         try:
             self._cursor.execute(qd.DELETE_ROOM % id)
             self._conn.commit()
+            flash('Room deleted succesfully!', category='success')
             logging.info(' * Room deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
@@ -157,6 +163,7 @@ class CDbManager:
             self._cursor.execute(qd.UPDATE_ROOM %
                                  (room_data['room_number'], room_data['floor'], room_data['room_price'], room_data['room_type'], int(room_data['smoking'] == True), id))
             self._conn.commit()
+            flash('Room updated succesfully!', category='success')
             logging.info(' * Room updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
@@ -213,6 +220,7 @@ class CDbManager:
             self._cursor.execute(qd.UPDATE_CLIENT %
                                  (client_data['name'], client_data['surname'], client_data['birthday'], client_data['adress'], client_data['cnp'], client_data['email'], client_data['phone'], id))
             self._conn.commit()
+            flash('Client updated succesfully!', category='success')
             logging.info(' * Client updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
@@ -222,6 +230,7 @@ class CDbManager:
         try:
             self._cursor.execute(qd.DELETE_CLIENT % id)
             self._conn.commit()
+            flash('Client deleted succesfully!', category='success')
             logging.info(' * Client deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
@@ -243,6 +252,7 @@ class CDbManager:
         try:
             self._cursor.execute(qd.DELETE_RESERVATION % id)
             self._conn.commit()
+            flash('Reservation deleted succesfully!', category='success')
             logging.info(' * Reservation deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
@@ -273,6 +283,7 @@ class CDbManager:
             self._cursor.execute(qd.UPDATE_RESERVATION %
                                  (reservation_data['idroom'], reservation_data['idclient'], reservation_data['start_date'], reservation_data['end_date'], reservation_data['parking'], reservation_data['breakfast'], reservation_data['dinner'], id))
             self._conn.commit()
+            flash('Reservation updated succesfully!', category='success')
             logging.info(' * Reservation updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
