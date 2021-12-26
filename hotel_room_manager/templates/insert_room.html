@@ -1,7 +1,14 @@
-{% extends "base.html" %} {% block title %} Insert a Room {% endblock %} {%block
-content %}
+{% extends "base.html" %} 
 
-<form method="post">
+{% from 'macros.html' import data_combo_box %} 
+
+{% block title %} 
+  Insert a Room 
+{% endblock %} 
+
+{%block content %}
+
+<form method="post" class="needs-validation" novalidate >
   <h1 align="center">Add a room</h1>
 
   <!-- Room Number -->
@@ -13,7 +20,11 @@ content %}
         class="form-control"
         id="roomNumber"
         name="room_number"
+        required
       />
+      <div class="invalid-feedback">
+        Please enter the room's number!
+      </div>
     </div>
   </div>
 
@@ -30,13 +41,17 @@ content %}
           class="form-control"
           id="inputPrice"
           name="room_price"
+          required
         />
         <span class="input-group-text">.00</span>
+        <div class="invalid-feedback">
+          Please enter the room's price per night!
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Room Floor Combo -->
+  <!-- 
+   Room Floor Combo 
   <div class="row mb-3">
     <label for="inputPrice" class="col-sm-2 col-form-label">Floor</label>
     <div class="col-sm-10">
@@ -44,6 +59,7 @@ content %}
         class="form-select"
         aria-label="Default select example"
         name="room_floor"
+        required
       >
         <option selected>Please select the room's floor</option>
         <option value="1">1</option>
@@ -54,8 +70,11 @@ content %}
       </select>
     </div>
   </div>
+  -->
 
-  <!-- Room Type Combo -->
+  {{ data_combo_box(floor_combo_label_text, floor_combo_name, floor_combo_data, floor_selected_option) }}
+
+  <!-- Room Type Combo
   <div class="row mb-3">
     <label for="inputPrice" class="col-sm-2 col-form-label">Room Type</label>
     <div class="col-sm-10">
@@ -74,7 +93,10 @@ content %}
         <option value="7">Appartament</option>
       </select>
     </div>
+    -->
 
+    {{ data_combo_box(type_combo_label_text, type_combo_name, type_combo_data, type_selected_option) }}
+    
     <!-- Som space between controls-->
     <h1></h1>
 
@@ -101,5 +123,7 @@ content %}
     Add the new room
   </button>
 </form>
+
+<script src="../static/form_validation.js"> </script>
 
 {% endblock %}

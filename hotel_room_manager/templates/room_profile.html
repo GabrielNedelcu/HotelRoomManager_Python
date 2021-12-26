@@ -9,7 +9,7 @@
 
 {%block content %}
 
-<form method="post">
+<form method="post" class="needs-validation" novalidate >
   <h1 align="center">Room Profile</h1>
 
   <!-- Room Number -->
@@ -22,7 +22,11 @@
         id="roomNumber"
         name="room_number"
         value={{ room_data['room_number'] }}
+        required
       />
+      <div class="invalid-feedback">
+        Please enter the room's number!
+      </div>
     </div>
   </div>
 
@@ -39,8 +43,12 @@
           id="inputPrice"
           name="room_price"
           value= {{ room_data['room_price'] }}
+          required
         />
         <span class="input-group-text">.00</span>
+        <div class="invalid-feedback">
+          Please enter the room's price per night!
+        </div>
       </div>
     </div>
   </div>
@@ -138,5 +146,7 @@
       {{ data_table(headings, data, view_redirect_page, delete_redirect_page) }}
     </div>
   </div>
+
+  <script src="../static/form_validation.js"> </script>
 
 {% endblock %}

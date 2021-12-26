@@ -3,7 +3,7 @@ content %}
 
 <h1 align="center">Add a client</h1>
 
-<form class="row g-3" method="post">
+<form class="row g-3 needs-validation" novalidate method="post">
   <!-- Client Name -->
   <div class="col-md-6">
     <label for="inputName" class="form-label">Name</label>
@@ -13,7 +13,11 @@ content %}
       id="inputName"
       name="client_name"
       placeholder="Popescu"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid Name!
+    </div>
   </div>
 
   <!-- Client Surname -->
@@ -25,7 +29,11 @@ content %}
       id="inputSurname"
       name="client_surname"
       placeholder="Ion"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid Surname!
+    </div>
   </div>
 
   <!-- Client Adress -->
@@ -37,7 +45,11 @@ content %}
       id="inputAddress"
       name="client_adress"
       placeholder="1234 Main St"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid adress!
+    </div>
   </div>
 
   <!-- Client Date Of Birth-->
@@ -49,7 +61,11 @@ content %}
       id="inputDoB"
       name="client_birthday"
       placeholder="12/02/2021"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter the clien't birthday!
+    </div>
   </div>
 
   <!-- Client CNP-->
@@ -61,7 +77,11 @@ content %}
       id="inputCNP"
       name="client_cnp"
       placeholder="6211201018187"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid CNP!
+    </div>
   </div>
 
   <!-- Client Email Adress-->
@@ -73,7 +93,11 @@ content %}
       id="inputEmail"
       name="client_email"
       placeholder="popescu.ion@gmail.com"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid email adress!
+    </div>
   </div>
 
   <!-- Client Phone Number-->
@@ -85,7 +109,11 @@ content %}
       id="inputPhoneNumber"
       name="client_phone"
       placeholder="0714151618"
+      required
     />
+    <div class="invalid-feedback">
+      Please enter a valid phone number!
+    </div>
   </div>
 
   <div class="col-12">
@@ -110,6 +138,9 @@ content %}
       uiLibrary: "bootstrap4",
     });
   </script>
+
+  <script src="../static/form_validation.js"> </script>
+
 </form>
 
 {% endblock %}

@@ -4,7 +4,7 @@ block content %}
 
 <h1 align="center">Reservation details</h1>
 
-<form class="row g-3" method="post">
+<form class="row g-3 needs-validation" novalidate method="post">
   <h1></h1>
   <!-- Room ComboBox -->
   {{ data_combo_box(rooms_combo_label_text, rooms_combo_name, rooms_combo_data, rooms_selected_option) }}
@@ -22,6 +22,7 @@ block content %}
         id="inputStartDate"
         value = {{ reservation_data['start_date'].strftime('%m/%d/%Y') }}
         name="start_date"
+        required
       />
     </div>
   </div>
@@ -36,6 +37,7 @@ block content %}
         id="inputEndDate"
         value = {{ reservation_data['end_date'].strftime('%m/%d/%Y') }}
         name="end_date"
+        required
       />
     </div>
   </div>
@@ -131,5 +133,7 @@ block content %}
     uiLibrary: "bootstrap4",
   });
 </script>
+
+<script src="../static/form_validation.js"> </script>
 
 {% endblock %}

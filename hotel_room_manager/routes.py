@@ -155,7 +155,9 @@ def add_client():
     # Get client data from form
     client = CClient()
     client.construct_from_form_data(request.form)
-    data_manager.add_client(client)
+
+    if request.method == "POST":
+        data_manager.add_client(client)
 
     return render_template("insert_client.html")
 
@@ -165,8 +167,31 @@ def add_room():
     # Get room data from form
     room = CRoom()
     room.construct_from_form_data(request.form)
-    data_manager.add_room(room)
-    return render_template("insert_room.html")
+
+    if request.method == "POST":
+        data_manager.add_room(room)
+
+    floor_combo_data = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+
+    room_type_combo_data = [
+        (1, 'Single'),
+        (2, 'Double'),
+        (3, 'Queen'),
+        (4, 'King'),
+        (5, 'Twin'),
+        (6, 'Suite'),
+        (7, 'Appartament')
+    ]
+
+    return render_template("insert_room.html",
+                           floor_combo_label_text="Floor", floor_combo_name='room_floor', floor_combo_data=floor_combo_data, floor_selected_option=-1,
+                           type_combo_label_text="Room Type", type_combo_name='room_type', type_combo_data=room_type_combo_data, type_selected_option=-1)
 
 
 @routes.route('/make-reservation', methods=['POST', 'GET'])
@@ -177,7 +202,10 @@ def add_reservation():
     all_clients = data_manager.get_client_id_to_name()
     all_rooms = data_manager.get_room_id_to_number()
     print(all_clients)
-    data_manager.add_reservation(reservation)
+
+    if request.method == "POST":
+        data_manager.add_reservation(reservation)
+
     return render_template("make_reservation.html",
                            clients_combo_label_text="Clients", clients_combo_name="client_id", clients_combo_data=all_clients, clients_selected_option=-1,
                            rooms_combo_label_text="Rooms", rooms_combo_name="room_id", rooms_combo_data=all_rooms, rooms_selected_option=-1)

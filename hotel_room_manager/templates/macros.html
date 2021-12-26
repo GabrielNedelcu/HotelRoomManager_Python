@@ -45,9 +45,10 @@
         class="form-select"
         aria-label="Default select example"
         name = {{ control_name }}
+        required
       >
        {% if selected_option < 0 %}
-          <option selected>Please select an option</option>
+          <option selected disabled value="">Select ...</option>
        {% endif %}
        <!-- <option selected>Please select an option</option> -->
         {% for row in control_data %}
@@ -67,6 +68,9 @@
           </option>
         {% endfor %}
       </select>
+      <div class="invalid-feedback">
+        Please enter a valid input!
+      </div>
     </div>
   </div>
 {% endmacro %}
