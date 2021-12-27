@@ -7,8 +7,8 @@ INSERT_CLIENT_QUERY = ("INSERT INTO clients"
                        "VALUES (%(name)s, %(surname)s, STR_TO_DATE(%(birthday)s,'%m/%d/%Y'), %(adress)s, %(cnp)s, %(email)s, %(phone)s)")
 
 INSERT_RESERVATION_QUERY = ("INSERT INTO reservations"
-                            "(idroom, idclient, start_date, end_date, parking, breakfast, dinner)"
-                            "VALUES (%(idroom)s, %(idclient)s, STR_TO_DATE(%(start_date)s,'%m/%d/%Y'), STR_TO_DATE(%(end_date)s,'%m/%d/%Y'), %(parking)s, %(breakfast)s, %(dinner)s)")
+                            "(idroom, idclient, start_date, end_date, parking, breakfast, dinner, total_price)"
+                            "VALUES (%(idroom)s, %(idclient)s, STR_TO_DATE(%(start_date)s,'%m/%d/%Y'), STR_TO_DATE(%(end_date)s,'%m/%d/%Y'), %(parking)s, %(breakfast)s, %(dinner)s, %(total_price)s)")
 
 GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
@@ -65,3 +65,7 @@ GET_RESERVATION_AT_ID = (
 UPDATE_RESERVATION = ("UPDATE reservations "
                       "SET idroom = '%s', idclient = '%s', start_date = STR_TO_DATE('%s','%%m/%%d/%%Y'), end_date = STR_TO_DATE('%s','%%m/%%d/%%Y'), parking = %s, breakfast = %s, dinner = %s "
                       "WHERE idreservation = '%s'")
+
+SET_ROOM_NEXT_DATE = ("UPDATE rooms "
+                      "SET next_avaliable_date = STR_TO_DATE('%s','%%m/%%d/%%Y') "
+                      "WHERE idroom = '%s'")

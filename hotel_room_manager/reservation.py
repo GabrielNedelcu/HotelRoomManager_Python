@@ -49,7 +49,8 @@ class CReservation:
             'end_date': self._end_date,
             'parking': self._parking,
             'breakfast': self._breakfast,
-            'dinner': self._lunch
+            'dinner': self._lunch,
+            'total_price': self._total_price
         }
 
         return data

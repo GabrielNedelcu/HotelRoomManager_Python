@@ -1,13 +1,17 @@
+from datetime import datetime, timedelta
 from flask import Blueprint
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask.helpers import flash
 from hotel_room_manager.client import CClient
 from hotel_room_manager.reservation import CReservation
 
 from hotel_room_manager.room import CRoom
 
 from .db_manager import CDbManager
+
+from datetime import datetime
 
 routes = Blueprint('routes', __name__)
 
@@ -199,12 +203,33 @@ def add_reservation():
     # Get reservation data from form
     reservation = CReservation()
     reservation.construct_from_form_data(request.form)
+
     all_clients = data_manager.get_client_id_to_name()
     all_rooms = data_manager.get_room_id_to_number()
     print(all_clients)
 
     if request.method == "POST":
-        data_manager.add_reservation(reservation)
+        data = request.form
+        room_id = int(data.get('room_id') or 0)
+        room = data_manager.get_room_at_id(room_id)
+        # Set total price
+        nb_days = (datetime.strptime(
+            reservation._end_date, '%m/%d/%Y') - datetime.strptime(
+                reservation._start_date, '%m/%d/%Y')).days
+        total_price = nb_days * room._price
+        reservation._total_price = total_price
+
+        # Check if the starting date is avaliable for the selected room
+        if room.check_avaliable_date(datetime.strptime(
+                reservation._start_date, '%m/%d/%Y')) == True:
+            data_manager.add_reservation(reservation)
+            next_av_date = datetime.strptime(
+                reservation._end_date, '%m/%d/%Y') + timedelta(days=1)
+            data_manager.set_room_next_avaliable_date(
+                room_id, next_av_date.date().strftime("%m/%d/%Y"))
+        else:
+            flash(
+                'The start date you wanted is not avaliable! Please, choose another day', category='error')
 
     return render_template("make_reservation.html",
                            clients_combo_label_text="Clients", clients_combo_name="client_id", clients_combo_data=all_clients, clients_selected_option=-1,

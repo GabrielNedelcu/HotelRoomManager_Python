@@ -1,4 +1,7 @@
 
+from logging import setLogRecordFactory
+
+
 class CRoom:
     _id_room = 0
     _number = 0
@@ -6,6 +9,7 @@ class CRoom:
     _price = 0
     _type = 0
     _smoking = False
+    _next_av_date = None
 
     def __init__(self):
         self._number = 0
@@ -13,6 +17,7 @@ class CRoom:
         self._price = 0
         self._type = 0
         self._smoking = False
+        self._next_av_date = None
 
     def construct_from_form_data(self, data):
         self._number = int(data.get('room_number') or 0)
@@ -28,6 +33,7 @@ class CRoom:
         self._price = data[0][3]
         self._type = data[0][4]
         self._smoking = data[0][5]
+        self._next_av_date = data[0][6]
 
     def get_room_data(self):
         data = {
@@ -39,3 +45,9 @@ class CRoom:
         }
 
         return data
+
+    def check_avaliable_date(self, wanted_date):
+        if self._next_av_date == None:
+            return True
+
+        return wanted_date.date() >= self._next_av_date

@@ -287,3 +287,14 @@ class CDbManager:
             logging.info(' * Reservation updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
             print("Error: {}".format(err))
+
+    def set_room_next_avaliable_date(self, id, date):
+        logging.info(
+            ' * Setting the next avaliable date to %s for the room with the ID = %s' % (date, id))
+        try:
+            self._cursor.execute(qd.SET_ROOM_NEXT_DATE %
+                                 (date, id))
+            self._conn.commit()
+            logging.info(' * Next avaliable date updated SUCCESSFULLY')
+        except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
