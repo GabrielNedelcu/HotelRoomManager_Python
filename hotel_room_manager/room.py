@@ -11,6 +11,7 @@ class CRoom:
     _smoking = False
     _next_av_date = None
 
+    # Default constructor
     def __init__(self):
         self._number = 0
         self._floor = 0
@@ -19,6 +20,7 @@ class CRoom:
         self._smoking = False
         self._next_av_date = None
 
+    # Construct The Room with the data gathered from a form
     def construct_from_form_data(self, data):
         self._number = int(data.get('room_number') or 0)
         self._floor = int(data.get('room_floor') or 0)
@@ -26,6 +28,7 @@ class CRoom:
         self._type = int(data.get('room_type') or 0)
         self._smoking = True if data.get('room_smoking') == 'on' else False
 
+    # Construct the Room with the data from the database
     def construct_from_db_data(self, data):
         self._id_room = data[0][0]
         self._number = data[0][1]
@@ -35,6 +38,8 @@ class CRoom:
         self._smoking = data[0][5]
         self._next_av_date = data[0][6]
 
+    # Return the room data in a dict
+    # Obs. The key is the fieldname of tha table
     def get_room_data(self):
         data = {
             'room_number': self._number,
@@ -46,6 +51,8 @@ class CRoom:
 
         return data
 
+    # Check to see if the wanted start date for the reservation
+    # is avaliable for the room
     def check_avaliable_date(self, wanted_date):
         if self._next_av_date == None:
             return True

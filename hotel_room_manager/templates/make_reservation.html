@@ -1,18 +1,28 @@
+{% extends "base.html" %} 
+
 {% from 'macros.html' import data_combo_box %} 
-{% extends "base.html" %} {% block title %} Make a Reservation {% endblock %} {%
-block content %}
+
+{% block title %} 
+  Make a Reservation 
+{% endblock %} 
+
+{% block content %}
 
 <h1 align="center">Make a new reservation</h1>
 
 <form class="row g-3 needs-validation" novalidate method="post">
   <h1></h1>
+
   <!-- Room ComboBox -->
+
   {{ data_combo_box(rooms_combo_label_text, rooms_combo_name, rooms_combo_data, rooms_selected_option) }}
 
   <!-- Clients ComboBox -->
+
   {{ data_combo_box(clients_combo_label_text, clients_combo_name, clients_combo_data, clients_selected_option) }}
 
   <!-- Start Date-->
+
   <div class="row mb-3">
     <label for="inputDoB" class="col-sm-2 col-form-label">Start Date</label>
     <div class="col-sm-10">
@@ -31,6 +41,7 @@ block content %}
   </div>
 
   <!-- End Date-->
+
   <div class="row mb-3">
     <label for="inputDoB" class="col-sm-2 col-form-label">End Date</label>
     <div class="col-sm-10">
@@ -48,10 +59,14 @@ block content %}
     </div>
   </div>
 
-  <!-- Additional Options Checboxes -->
+  <!-- Additional Options Checkboxes -->
+
   <div class="col-12">
     <fieldset class="row mb-3">
       <legend class="col-form-label col-sm-2 pt-0">Additional Options</legend>
+
+      <!-- Parking spot included -->
+
       <div class="col-sm-10">
         <div class="form-check">
           <input
@@ -64,6 +79,9 @@ block content %}
             Parking Spot
           </label>
         </div>
+
+        <!-- Breakfast Included -->
+
         <div class="form-check">
           <input
             class="form-check-input"
@@ -75,6 +93,9 @@ block content %}
             Breakfast Included
           </label>
         </div>
+
+        <!--Lunch Included -->
+
         <div class="form-check">
           <input
             class="form-check-input"
@@ -90,7 +111,7 @@ block content %}
     </fieldset>
   </div>
 
-  <!-- Add the new Client Button -->
+  <!-- "Add the new Reservation" Button -->
   <div class="col-12">
     <button type="submit" class="btn btn-primary mx-auto d-block">
       Add the new reservation

@@ -1,3 +1,7 @@
+# FILE CONTAINING ALL THE QUERYS FOR THE DATABASE OPERATIONS
+# DO NOT MODIFY!!
+
+
 INSERT_ROOM_QUERY = ("INSERT INTO rooms"
                      "(room_number, floor, room_price, room_type, smoking)"
                      "VALUES (%(room_number)s, %(floor)s, %(room_price)s, %(room_type)s, %(smoking)s)")
@@ -13,8 +17,6 @@ INSERT_RESERVATION_QUERY = ("INSERT INTO reservations"
 GET_ALL_ROOMS = ("SELECT * FROM rooms")
 
 GET_ALL_CLIENTS = ("SELECT * FROM clients")
-
-#GET_ALL_RESERVATIONS = ("SELECT * FROM reservations")
 
 GET_CLIENT_ID_TO_NAME = ("SELECT idclient, name, surname FROM clients")
 

@@ -9,13 +9,16 @@
 
 {% endmacro%} 
 
+<!-- Table Row Macro -->
 {% macro data_rows(data, view_redirect_page, delete_redirect_page) %}
 <tbody>
+  <!-- Generate each row according to the data sent -->
   {% for row in data %}
   <tr>
     {% for cell in row %}
     <td>{{ cell }}</td>
     {% endfor %}
+    <!-- At the end of a row add 2 buttons: view record data & delete record data -->
     <td>
       <a href="{{ view_redirect_page }}/{{ row[0] }}">
         <button type="button" class="btn btn-primary">Edit</button>
@@ -31,12 +34,17 @@
 </tbody>
 {% endmacro%} 
 
+<!-- Data table macro -->
 {% macro data_table(headings, data, view_redirect_page, delete_redirect_page) %}
 <table class="table table-hover">
-  {{ heading_row(headings) }} {{ data_rows(data, view_redirect_page, delete_redirect_page) }}
+  <!-- Headings -->
+  {{ heading_row(headings) }} 
+  <!-- Rows -->
+  {{ data_rows(data, view_redirect_page, delete_redirect_page) }}
 </table>
 {% endmacro %}
 
+<!-- ComboBox Macro -->
 {% macro data_combo_box(label_text, control_name, control_data, selected_option) %}
 <div class="row mb-3">
     <label for="inputClient" class="col-sm-2 col-form-label">{{label_text}}</label>
@@ -47,11 +55,12 @@
         name = {{ control_name }}
         required
       >
+      <!-- If no option is selected -->
        {% if selected_option < 0 %}
           <option selected disabled value="">Select ...</option>
        {% endif %}
-       <!-- <option selected>Please select an option</option> -->
         {% for row in control_data %}
+          <!-- Check if this option is selected -->
           {% if selected_option == row[0] %}
             <option value = {{ row[0] }} selected>
           {% else %}

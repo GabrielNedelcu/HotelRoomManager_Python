@@ -1,3 +1,5 @@
+// Form validation function
+
 (function () {
     'use strict'
 

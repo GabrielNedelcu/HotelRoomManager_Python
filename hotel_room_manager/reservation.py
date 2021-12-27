@@ -10,6 +10,7 @@ class CReservation:
     _lunch = False
     _total_price = 0
 
+    # Default constructor
     def __init__(self):
         self._id_reservation = 0
         self._id_room = 0
@@ -21,6 +22,7 @@ class CReservation:
         self._lunch = False
         self._total_price = 0
 
+    # Construct The Reservation with the data gathered from a form
     def construct_from_form_data(self, data):
         self._id_room = int(data.get('room_id') or 0)
         self._id_client = int(data.get('client_id') or 0)
@@ -31,6 +33,7 @@ class CReservation:
             'breakfast_included') == 'on' else False
         self._lunch = True if data.get('lunch_included') == 'on' else False
 
+    # Construct the reservation with the data from the database
     def construct_from_db_data(self, data):
         self._id_reservation = data[0][0]
         self._id_room = data[0][1]
@@ -41,6 +44,8 @@ class CReservation:
         self._breakfast = data[0][6]
         self._lunch = data[0][7]
 
+    # Return the reservation data in a dict
+    # Obs. The key is the fieldname of tha table
     def get_reservation_data(self):
         data = {
             'idroom': self._id_room,
@@ -54,7 +59,3 @@ class CReservation:
         }
 
         return data
-
-    def calculate_total_price(self):
-        delta = self._end_date - self._start_date
-        nb_days = delta.days

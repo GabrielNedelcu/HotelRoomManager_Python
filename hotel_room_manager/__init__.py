@@ -7,8 +7,8 @@ def create_app():
 
     from .routes import routes
 
-    app.register_blueprint(routes, url_prefix='/')
+    # Register the implemented routes
 
-    # db.init_connection()
+    app.register_blueprint(routes, url_prefix='/')
 
     return app

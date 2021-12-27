@@ -20,6 +20,7 @@
   </head>
   <body>
 
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Hotel Manager</a>
@@ -63,6 +64,8 @@
       </div>
     </nav>
 
+    <!-- Flash Messages Shown to the user -->
+    
     {% with messages = get_flashed_messages(with_categories=true) %} 
       {% if messages %} 
         {% for category, message in messages %} 

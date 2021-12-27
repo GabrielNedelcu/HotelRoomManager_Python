@@ -1,6 +1,6 @@
-{% from 'macros.html' import data_table %} 
-
 {% extends "base.html" %} 
+
+{% from 'macros.html' import data_table %} 
 
 {% block title %} 
     View Rooms 
@@ -8,5 +8,9 @@
 
 {% block content %}
     <h1 align="center">All rooms</h1>
+
+    <!-- Table including all the rooms in the database -->
+
     {{ data_table(headings, data, view_redirect_page, delete_redirect_page) }} 
+
 {% endblock %}

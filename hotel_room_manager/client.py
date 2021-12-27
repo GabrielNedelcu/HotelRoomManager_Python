@@ -8,6 +8,7 @@ class CClient:
     _email = ""
     _phone = 0
 
+    # Default constructor
     def __init__(self):
         self._name = 0
         self._surname = 0
@@ -17,6 +18,7 @@ class CClient:
         self._email = 0
         self._phone = 0
 
+    # Construct The Client with the data gathered from a form
     def construct_from_form_data(self, data):
         self._name = data.get('client_name')
         self._surname = data.get('client_surname')
@@ -26,6 +28,7 @@ class CClient:
         self._email = data.get('client_email')
         self._phone = data.get('client_phone')
 
+    # Construct the client with the data from the database
     def construct_from_db_data(self, data):
         self._id_client = data[0][0]
         self._name = data[0][1]
@@ -36,6 +39,8 @@ class CClient:
         self._email = data[0][6]
         self._phone = data[0][7]
 
+    # Return the client data in a dict
+    # Obs. The key is the fieldname of tha table
     def get_client_data(self):
         data = {
             'name': self._name,

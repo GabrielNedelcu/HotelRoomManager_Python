@@ -17,9 +17,12 @@ class CDbManager:
     _conn = None
     _cursor = None
 
+    # Default constructor
     def __init__(self):
+        # Init the connection to the database
         self.init_connection()
 
+    # Connect to the database
     def init_connection(self):
         try:
             print('Connecting to hotel_manager...')
@@ -30,81 +33,119 @@ class CDbManager:
                 database="hotel_manager")
 
             if self._conn.is_connected():
-                print('Connection established ...')
+                logging.info(' * Connection is UP')
+                # If the connection is established, init the cursor
                 self._cursor = self._conn.cursor()
             else:
-                print('Connection failed ...')
+                logging.info(' * Connection FAILED')
         except Error as e:
-            print(e)
+            logging.debug(" * " + e)
 
+    # Check the connection
     def check_connection(self):
         if self._conn.is_connected():
-            print('Connection is up ...')
+            logging.info(' * Connection is UP')
         else:
-            print('Connection is down ...')
+            logging.info(' * Connection is DOWN')
 
+    # Add a room to the database
     def add_room(self, room):
+        # Get the data from the object
         room_data = room.get_room_data()
+        # Check if the data is not empty
         if room_data != None:
             try:
+                # Execute the query
                 self._cursor.execute(qd.INSERT_ROOM_QUERY, room_data)
+                # Commit the change to the db
                 self._conn.commit()
+                # Flash success message
                 flash('Room succesfully added!', category='success')
             except mysql.connector.IntegrityError as err:
-                print("Error: {}".format(err))
+                logging.debug(" * SQL Error: {}".format(err))
+                # Flash error message
+                flash('SQL Error!', category='error')
         else:
             logging.debug(" * Room Data is NULL!! Please DEBUG!!")
 
+    # Add a client to the database
     def add_client(self, client):
+        # Get the data from the object
         client_data = client.get_client_data()
+        # Check if the data is not empty
         if client_data != None:
             try:
+                # Execute the query
                 self._cursor.execute(qd.INSERT_CLIENT_QUERY, client_data)
+                # Commit the change to the db
                 self._conn.commit()
+                # Flash success message
                 flash('Client succesfully added!', category='success')
             except mysql.connector.IntegrityError as err:
-                print("Error: {}".format(err))
+                logging.debug(" * SQL Error: {}".format(err))
+                # Flash error message
+                flash('SQL Error!', category='error')
         else:
             logging.debug(" * Client Data is NULL!! Please DEBUG!!")
 
+    # Add a reservation to the database
     def add_reservation(self, reservation):
+        # Get the data from the object
         reservation_data = reservation.get_reservation_data()
+        # Check if the data is not empty
         if reservation_data != None:
             try:
+                # Execute the query
                 self._cursor.execute(
                     qd.INSERT_RESERVATION_QUERY, reservation_data)
+                # Commit the change to the db
                 self._conn.commit()
+                # Flash success message
                 flash('Reservation succesfully added!', category='success')
-                #print("Reservation succesfully added!")
             except mysql.connector.IntegrityError as err:
-                print("Error: {}".format(err))
+                logging.debug(" * SQL Error: {}".format(err))
+                # Flash error message
+                flash('SQL Error!', category='error')
         else:
             logging.debug(" * Reservation Data is NULL!! Please DEBUG!!")
 
+    # Get all the rooms from the db
     def get_all_rooms(self):
         rooms_data = None
         try:
+            # Execute the query
             self._cursor.execute(qd.GET_ALL_ROOMS)
+            # Fetch all the data
             rooms_data = self._cursor.fetchall()
+            # Check if the retrieved data is not empty
             if rooms_data != None:
                 return rooms_data
             else:
                 logging.debug(" * Rooms Data is NULL!!! Please DEBUG!!")
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get all the clients from the db
     def get_all_clients(self):
         clients_data = None
         try:
+            # Execute the query
             self._cursor.execute(qd.GET_ALL_CLIENTS)
-            rooms_data = self._cursor.fetchall()
-            if rooms_data != None:
-                return rooms_data
+            # Fetch the data
+            clients_data = self._cursor.fetchall()
+            # Check if the retrieved data is not empty
+            if clients_data != None:
+                return clients_data
             else:
                 logging.debug(' * Clients Data is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get a list of all client id & names
     def get_client_id_to_name(self):
         data_set = None
         try:
@@ -115,8 +156,11 @@ class CDbManager:
             else:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get a list of all room numbers & id
     def get_room_id_to_number(self):
         data_set = None
         try:
@@ -127,8 +171,11 @@ class CDbManager:
             else:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get the room data for a given id
     def get_room_at_id(self, id):
         logging.info(' * Getting room data at ID = %s' % id)
         room = None
@@ -137,15 +184,17 @@ class CDbManager:
             self._cursor.execute(qd.GET_ROOM_AT_ID % id)
             data_set = self._cursor.fetchall()
             if data_set != None:
-                print(data_set)
                 room = CRoom()
                 room.construct_from_db_data(data_set)
                 return room
             else:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Delete a given(by id) room
     def delete_room(self, id):
         logging.info(' * Deleting the room with the ID = %s' % id)
         try:
@@ -154,8 +203,11 @@ class CDbManager:
             flash('Room deleted succesfully!', category='success')
             logging.info(' * Room deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Update the room with the given id with the data from the given room
     def update_room(self, id, room):
         logging.info(' * Updating the room with the ID = %s' % id)
         room_data = room.get_room_data()
@@ -166,53 +218,59 @@ class CDbManager:
             flash('Room updated succesfully!', category='success')
             logging.info(' * Room updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get all reservations made for the given room
     def get_room_reservation_history(self, idroom):
         logging.info(
             ' * Getting the reservation history for the room with the ID = %s' % id)
         try:
             self._cursor.execute(qd.SELECT_RESERVATIONS_FOR_ROOM % idroom)
             data_set = self._cursor.fetchall()
-            # print("INNER")
-            # print(data_set)
             logging.info(
                 ' * History fetched SUCCESSFULLY - %d records' % len(data_set))
             return data_set
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get the data for a given client
     def get_client_at_id(self, id):
         logging.info(' * Getting client data at ID = %s' % id)
         client = None
-        client_set = None
         try:
             self._cursor.execute(qd.GET_CLIENT_AT_ID % id)
             data_set = self._cursor.fetchall()
             if data_set != None:
-                print(data_set)
                 client = CClient()
                 client.construct_from_db_data(data_set)
                 return client
             else:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get all reservations made by the given client
     def get_client_reservation_history(self, idclient):
         logging.info(
             ' * Getting the reservation history for the client with the ID = %s' % id)
         try:
             self._cursor.execute(qd.SELECT_RESERVATIONS_FOR_CLIENT % idclient)
             data_set = self._cursor.fetchall()
-            # print("INNER")
-            # print(data_set)
             logging.info(
                 ' * History fetched SUCCESSFULLY - %d records' % len(data_set))
             return data_set
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Update the given client with the data from the new client
     def update_client(self, id, client):
         logging.info(' * Updating the client with the ID = %s' % id)
         client_data = client.get_client_data()
@@ -223,8 +281,11 @@ class CDbManager:
             flash('Client updated succesfully!', category='success')
             logging.info(' * Client updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Delete the given client
     def delete_client(self, id):
         logging.info(' * Deleting the client with the ID = %s' % id)
         try:
@@ -233,8 +294,11 @@ class CDbManager:
             flash('Client deleted succesfully!', category='success')
             logging.info(' * Client deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get all the reservations from the db
     def get_all_reservations(self):
         logging.info(' * Getting all the reservations')
         data_set = None
@@ -245,8 +309,11 @@ class CDbManager:
                 ' * Reservations fetched SUCCESSFULLY - %d records' % len(data_set))
             return data_set
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Delete a given reservation
     def delete_reservation(self, id):
         logging.info(' * Deleting the client with the ID = %s' % id)
         try:
@@ -255,30 +322,31 @@ class CDbManager:
             flash('Reservation deleted succesfully!', category='success')
             logging.info(' * Reservation deleted SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
+    # Get the data from a given reservation id
     def get_reservation_at_id(self, id):
         logging.info(' * Getting reservation data at ID = %s' % id)
         reservation = None
-        reservation_set = None
         try:
             self._cursor.execute(qd.GET_RESERVATION_AT_ID % id)
             data_set = self._cursor.fetchall()
             if data_set != None:
-                print(data_set)
                 reservation = CReservation()
                 reservation.construct_from_db_data(data_set)
                 return reservation
             else:
                 logging.debug(' * Data Set is NULL!!! Please DEBUG!!')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
     def update_reservation(self, id, reservation):
         logging.info(' * Updating the reservation with the ID = %s' % id)
         reservation_data = reservation.get_reservation_data()
-        print("-- UPDATING WITH DATA:")
-        print(reservation_data)
         try:
             self._cursor.execute(qd.UPDATE_RESERVATION %
                                  (reservation_data['idroom'], reservation_data['idclient'], reservation_data['start_date'], reservation_data['end_date'], reservation_data['parking'], reservation_data['breakfast'], reservation_data['dinner'], id))
@@ -286,7 +354,9 @@ class CDbManager:
             flash('Reservation updated succesfully!', category='success')
             logging.info(' * Reservation updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')
 
     def set_room_next_avaliable_date(self, id, date):
         logging.info(
@@ -297,4 +367,6 @@ class CDbManager:
             self._conn.commit()
             logging.info(' * Next avaliable date updated SUCCESSFULLY')
         except mysql.connector.IntegrityError as err:
-            print("Error: {}".format(err))
+            logging.debug(" * SQL Error: {}".format(err))
+            # Flash error message
+            flash('SQL Error!', category='error')

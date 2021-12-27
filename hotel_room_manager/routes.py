@@ -29,7 +29,6 @@ def view_rooms():
     all_rooms = data_manager.get_all_rooms()
     table_headings = ("ID", "Room Number", "Floor", "Price per Night", "Room Type",
                       "Smoking allowed", "Next avaliable date", "Edit Room", "Delete Room")
-    print(all_rooms)
     return render_template("all_rooms.html", data=all_rooms, headings=table_headings, view_redirect_page="/room-profile", delete_redirect_page="/delete-room")
 
 
@@ -44,7 +43,6 @@ def view_clients():
 @routes.route('/view-reservations', methods=['POST', 'GET'])
 def view_reservations():
     all_reservations = data_manager.get_all_reservations()
-    print(all_reservations)
     table_headings = ["Reservation ID", "Room ID", "Room Number",
                       "Client ID", "Client Name", "Client Surname",
                       "Start Date", "End Date", "Parking", "Breakfast", "Dinner", "Total Price",
@@ -127,7 +125,6 @@ def view_room_profile(room_id):
     room_data = room.get_room_data()
     selected_floor = room_data['floor']
     selected_room_type = int(room_data['room_type'] or 0)
-    print(room.get_room_data())
 
     return render_template("room_profile.html",
                            room_data=room.get_room_data(),
@@ -206,7 +203,6 @@ def add_reservation():
 
     all_clients = data_manager.get_client_id_to_name()
     all_rooms = data_manager.get_room_id_to_number()
-    print(all_clients)
 
     if request.method == "POST":
         data = request.form
