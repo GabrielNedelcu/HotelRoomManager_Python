@@ -36,7 +36,7 @@ def view_rooms():
 def view_clients():
     all_clients = data_manager.get_all_clients()
     table_headings = ("ID", "Name", "Surname", "Birthday", "Adress", "CNP", "Email",
-                      "Phone", "Picture", "Edit Client", "Delete Client")
+                      "Phone", "Edit Client", "Delete Client")
     return render_template("all_clients.html", data=all_clients, headings=table_headings, view_redirect_page="/client-profile", delete_redirect_page="/delete-client")
 
 
