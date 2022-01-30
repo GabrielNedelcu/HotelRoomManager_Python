@@ -68,7 +68,7 @@ def view_client_profile(client_id):
         client_id)
 
     return render_template("client_profile.html", client_data=client_data,
-                           headings=table_headings, data=reservation_history, view_redirect_page='/view-reservations', delete_redirect_page="/delete-reservation")
+                           headings=table_headings, data=reservation_history, view_redirect_page='/reservation-profile', delete_redirect_page="/delete-reservation")
 
 
 @routes.route('/reservation-profile/<reservation_id>', methods=['POST', 'GET'])
@@ -130,7 +130,7 @@ def view_room_profile(room_id):
                            room_data=room.get_room_data(),
                            floor_combo_label_text="Floor", floor_combo_name='room_floor', floor_combo_data=floor_combo_data, floor_selected_option=selected_floor,
                            type_combo_label_text="Room Type", type_combo_name='room_type', type_combo_data=room_type_combo_data, type_selected_option=selected_room_type,
-                           headings=table_headings, data=reservation_history, view_redirect_page='/view-reservations', delete_redirect_page="/delete-reservation")
+                           headings=table_headings, data=reservation_history, view_redirect_page='/reservation-profile', delete_redirect_page="/delete-reservation")
 
 
 @routes.route('/delete-room/<room_id>', methods=['POST', 'GET'])
